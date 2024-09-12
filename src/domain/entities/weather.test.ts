@@ -4,7 +4,7 @@ describe('Weather', () => {
   it('should create an instance with Celsius temperature', () => {
     const props: WeatherProps = {
       city: 'São Paulo',
-      date: new Date(),
+      date: new Date().toISOString(),
       temperatureInCelsius: 25,
     };
     const weather = Weather.create(props);
@@ -17,7 +17,7 @@ describe('Weather', () => {
   it('should create an instance with Fahrenheit temperature', () => {
     const props: WeatherProps = {
       city: 'New York',
-      date: new Date(),
+      date: new Date().toISOString(),
       temperatureInFahrenheit: 77,
     };
     const weather = Weather.create(props);
@@ -30,7 +30,7 @@ describe('Weather', () => {
   it('should create an instance with both temperatures', () => {
     const props: WeatherProps = {
       city: 'Los Angeles',
-      date: new Date(),
+      date: new Date().toISOString(),
       temperatureInCelsius: 20,
       temperatureInFahrenheit: 68,
     };
@@ -44,7 +44,7 @@ describe('Weather', () => {
   it('should throw an error if neither temperature is provided', () => {
     const props: WeatherProps = {
       city: 'Seattle',
-      date: new Date(),
+      date: new Date().toISOString(),
     };
     expect(() => Weather.create(props)).toThrow('Both temperatures could not be determined.');
   });
@@ -52,7 +52,7 @@ describe('Weather', () => {
   it('should throw an error for inconsistent temperatures', () => {
     const props: WeatherProps = {
       city: 'Sydney',
-      date: new Date(),
+      date: new Date().toISOString(),
       temperatureInCelsius: 30,
       temperatureInFahrenheit: 80, // Wrong value for 30°C
     };
