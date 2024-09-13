@@ -6,7 +6,7 @@
     "dev": "tsx watch src/index.ts",
     "test:unit": "jest --config jest.config.unit.ts",
     "migrate:dev": "npx prisma migrate dev --schema=prisma/schema.prisma",
-    "test:e2e": "npm run migrate:test && env-cmd -f .env.test jest --config jest.config.e2e.ts && rimraf prisma/test.db",
+    "test:e2e": "npm run migrate:test && env-cmd -f .env.test jest --runInBand --config jest.config.e2e.ts && rimraf prisma/test.db",
     "migrate:test": "env-cmd -f .env.test npx prisma migrate deploy --schema=prisma/schema.prisma",
     "generate": "prisma generate --schema=prisma/schema.prisma",
     "build": "tsc",

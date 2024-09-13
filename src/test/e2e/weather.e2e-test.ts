@@ -4,8 +4,8 @@ import { startServer, app } from '../..';
 describe('Weather Controller E2E Tests', () => {
   beforeAll(async () => {
     await startServer({
-      port: 3000,
-      maxRequestPerLimit: 1000,
+      port: 3002,
+      maxRequestPerLimit: 10000,
       rateLimitTimeWindow: '10 minutes',
     });
 
@@ -31,7 +31,7 @@ describe('Weather Controller E2E Tests', () => {
 
   it('should return 400 if the date is in the future', async () => {
     const city = 'New York';
-    const futureDate = '2050-01-01';
+    const futureDate = '2050-01-02';
 
     const res = await request(app.server).get(`/weather?city=${city}&date=${futureDate}`);
 
@@ -41,7 +41,7 @@ describe('Weather Controller E2E Tests', () => {
 
   it('should return cached data if available', async () => {
     const city = 'New York';
-    const date = '2023-09-01';
+    const date = '2023-09-03';
 
     await request(app.server).get(`/weather?city=${city}&date=${date}`);
 
@@ -53,9 +53,10 @@ describe('Weather Controller E2E Tests', () => {
     expect(res.body).toHaveProperty('temperatureInCelsius');
     expect(res.body).toHaveProperty('temperatureInFahrenheit');
   });
+
   it('should convert temperature to Celsius correctly', async () => {
     const city = 'Tokyo';
-    const date = '2023-09-01';
+    const date = '2023-09-04';
 
     const res = await request(app.server).get(`/weather?city=${city}&date=${date}`);
 
@@ -69,7 +70,7 @@ describe('Weather Controller E2E Tests', () => {
 
   it('should convert temperature to Fahrenheit correctly', async () => {
     const city = 'Tokyo';
-    const date = '2023-09-01';
+    const date = '2023-09-05';
 
     const res = await request(app.server).get(`/weather?city=${city}&date=${date}`);
 

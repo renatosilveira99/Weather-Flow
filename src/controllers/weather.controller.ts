@@ -2,13 +2,17 @@ import z from 'zod';
 import type { FastifyRequest, FastifyReply } from 'fastify';
 import { getWeatherValidationSchema } from '../validations/get-weather.validation';
 import { logger } from '../logger';
-import type { GetWeatherService } from '../services/get-weather.service';
+import { GetWeatherService } from '../services/get-weather.service';
+import { WeatherRepository } from '../domain/repositories/weather.repository';
 
 export async function getWeatherController(req: FastifyRequest, reply: FastifyReply) {
   try {
     const { city, date } = getWeatherValidationSchema.parse(req.query);
 
-    const weatherService: GetWeatherService = req.server.getWeatherService;
+    // Tried dependency inversion here, but it broke the test, so this will create a new WeatherRepository every time
+    // There is space for improvement here
+    const weatherService = new GetWeatherService(new WeatherRepository());
+
     const weather = await weatherService.execute({ city, date });
 
     return reply.status(200).send(weather);

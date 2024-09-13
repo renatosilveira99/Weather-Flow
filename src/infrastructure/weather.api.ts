@@ -6,18 +6,26 @@ interface WeatherAPIResponse {
   fahrenheit?: number;
 }
 
+interface WeatherAPIResponseWithCelsiusWrong {
+  celcius?: number;
+  fahrenheit?: number;
+}
+
 interface ErrorResponse {
   error: string;
 }
 
 export async function getWeatherFromAPI(params: { city: string; date: string }): Promise<WeatherAPIResponse> {
   try {
-    const response = await axios.post<WeatherAPIResponse>(
+    const response = await axios.post<WeatherAPIResponseWithCelsiusWrong>(
       'https://staging.v4.api.wander.com/hiring-test/weather',
       params,
     );
 
-    return response.data;
+    //It took me a few hours and a few integration tests to find the issue here
+    const { celcius: celsius, fahrenheit } = response.data;
+
+    return { celsius, fahrenheit };
   } catch (error: unknown) {
     let errorMessage = 'Unknown error occurred while calling External Weather API';
 

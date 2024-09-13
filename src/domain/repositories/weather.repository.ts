@@ -1,8 +1,7 @@
 import { prisma } from '../../infrastructure/database/prisma.client';
 import { Weather } from '../entities/weather';
-import type { IWeatherRepository } from './Iweather.repository';
 
-export class WeatherRepository implements IWeatherRepository {
+export class WeatherRepository {
   async getWeather(props: { city: string; date: string }): Promise<Weather | null> {
     const cachedWeather = await prisma.weatherCache.findFirst({
       where: {
@@ -21,9 +20,18 @@ export class WeatherRepository implements IWeatherRepository {
   }
 
   async cacheWeather(weather: Weather): Promise<void> {
-    await prisma.weatherCache.create({
-      data: {
-        id: weather.id,
+    await prisma.weatherCache.upsert({
+      where: {
+        city_date: {
+          city: weather.city,
+          date: weather.date,
+        },
+      },
+      update: {
+        temperatureInCelsius: weather.temperatureInCelsius,
+        temperatureInFahrenheit: weather.temperatureInFahrenheit,
+      },
+      create: {
         city: weather.city,
         date: weather.date,
         temperatureInCelsius: weather.temperatureInCelsius,

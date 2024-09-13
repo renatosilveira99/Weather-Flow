@@ -3,8 +3,6 @@ import { serializerCompiler, validatorCompiler, type ZodTypeProvider } from 'fas
 import FastifyRateLimit from '@fastify/rate-limit';
 import { logger } from './logger';
 import { weatherRoutes } from './routes/weather.route';
-import { WeatherRepository } from './domain/repositories/weather.repository';
-import { GetWeatherService } from './services/get-weather.service';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -23,12 +21,7 @@ const startServer = async ({
       timeWindow: rateLimitTimeWindow,
     });
 
-    app.register(async (fastify) => {
-      fastify.decorate('weatherRepository', new WeatherRepository());
-      fastify.decorate('getWeatherService', new GetWeatherService(fastify.weatherRepository));
-    });
-
-    app.register(weatherRoutes);
+    await app.register(weatherRoutes);
 
     app.setValidatorCompiler(validatorCompiler);
     app.setSerializerCompiler(serializerCompiler);
@@ -44,7 +37,7 @@ export { app, startServer };
 
 if (require.main === module) {
   startServer({
-    port: 3000,
+    port: 3333,
     maxRequestPerLimit: 5,
     rateLimitTimeWindow: '10 seconds',
   });
