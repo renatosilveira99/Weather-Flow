@@ -18,7 +18,7 @@ describe('Weather Controller E2E Tests', () => {
 
   it('should fetch weather data for a valid city and date', async () => {
     const city = 'New York';
-    const date = '2023-09-01T12:00:00Z';
+    const date = '2023-09-01';
 
     const res = await request(app.server).get(`/weather?city=${city}&date=${date}`);
 
@@ -31,7 +31,7 @@ describe('Weather Controller E2E Tests', () => {
 
   it('should return 400 if the date is in the future', async () => {
     const city = 'New York';
-    const futureDate = '2050-01-01T12:00:00Z';
+    const futureDate = '2050-01-01';
 
     const res = await request(app.server).get(`/weather?city=${city}&date=${futureDate}`);
 
@@ -41,7 +41,7 @@ describe('Weather Controller E2E Tests', () => {
 
   it('should return cached data if available', async () => {
     const city = 'New York';
-    const date = '2023-09-01T12:00:00Z';
+    const date = '2023-09-01';
 
     await request(app.server).get(`/weather?city=${city}&date=${date}`);
 
@@ -55,7 +55,7 @@ describe('Weather Controller E2E Tests', () => {
   });
   it('should convert temperature to Celsius correctly', async () => {
     const city = 'Tokyo';
-    const date = '2023-09-01T12:00:00Z';
+    const date = '2023-09-01';
 
     const res = await request(app.server).get(`/weather?city=${city}&date=${date}`);
 
@@ -69,7 +69,7 @@ describe('Weather Controller E2E Tests', () => {
 
   it('should convert temperature to Fahrenheit correctly', async () => {
     const city = 'Tokyo';
-    const date = '2023-09-01T12:00:00Z';
+    const date = '2023-09-01';
 
     const res = await request(app.server).get(`/weather?city=${city}&date=${date}`);
 

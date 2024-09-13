@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 
 export interface WeatherProps {
+  id?: string;
   city: string;
   date: string;
   temperatureInCelsius?: number;
@@ -16,8 +17,8 @@ export class Weather {
     public readonly temperatureInFahrenheit: number,
   ) {}
 
-  static create({ city, date, temperatureInCelsius, temperatureInFahrenheit }: WeatherProps): Weather {
-    const id = randomUUID();
+  static create({ id, city, date, temperatureInCelsius, temperatureInFahrenheit }: WeatherProps): Weather {
+    id = id || randomUUID();
 
     let tempC: number | undefined = temperatureInCelsius;
     let tempF: number | undefined = temperatureInFahrenheit;

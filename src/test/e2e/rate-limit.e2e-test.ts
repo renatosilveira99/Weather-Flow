@@ -18,7 +18,7 @@ describe('Rate Limit E2E Tests', () => {
 
   it('should handle API rate limit', async () => {
     const city = 'New York';
-    const date = '2023-09-01T12:00:00Z';
+    const date = '2023-09-01';
 
     const requests = [];
 
