@@ -1,4 +1,4 @@
-import { getWeatherValidationSchema } from './get-weather.validation';
+import { getWeatherValidationSchema } from '../../validations/get-weather.validation';
 
 describe('getWeatherValidationSchema', () => {
   it('should reject future dates with time considered', () => {

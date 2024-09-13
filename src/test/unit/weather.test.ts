@@ -1,4 +1,4 @@
-import { Weather, type WeatherProps } from './weather';
+import { Weather, type WeatherProps } from '../../domain/entities/weather';
 
 describe('Weather', () => {
   it('should create an instance with Celsius temperature', () => {
